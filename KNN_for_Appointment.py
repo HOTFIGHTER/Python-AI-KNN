@@ -14,21 +14,21 @@ def file2matrix(filename):
    return:
        数据矩阵 returnMat 和对应的类别 classLabelVector
     """
-   fr = open(filename)
-   print(fr)
+   fr = open(filename,'r')
    #获取读取的行数
-   numberOfLines=len(fr.readLines())
+   numberOfLines=len(fr.readlines())
    # 生成对应的空矩阵
    # 例如：zeros(2，3)就是生成一个 2*3的矩阵，各个位置上全是 0
    returnMat = np.zeros((numberOfLines, 3))
    classLabelVector = []
    index = 0
+   fr = open(filename, 'r')
    for line in fr.readlines():
        # str.strip([chars]) --返回已移除字符串头尾指定字符所生成的新字符串
        line = line.strip()
        # 以 '\t' 切割字符串
        listFromLine = line.split('\t')
-       # 每列的属性数据
+       # 每列的属性数据并转化为float类型
        returnMat[index, :] = listFromLine[0:3]
        # 每列的类别数据，就是 label 标签数据(测试集结果页)
        classLabelVector.append(int(listFromLine[-1]))
@@ -79,7 +79,7 @@ def classify0(inX, dataSet, labels, k):
     for i in range(k):
       voteIlabel = labels[sortedDistIndicies[i]]
       classCount[voteIlabel] = classCount.get(voteIlabel, 0) + 1
-    sortedClassCount = sorted(classCount.iteritems(), key=operator.itemgetter(1), reverse=True)
+    sortedClassCount = sorted(classCount.items(), key=operator.itemgetter(1), reverse=True)
     return sortedClassCount[0][0]
 
 def datingClassTest():
